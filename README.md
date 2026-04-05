@@ -42,7 +42,7 @@
     
     
 ### **📁 증빙 자료:**
-  * [1차_AI협업캡처.pdf 첨부 완료] (첨부 후 링크)https://github.com/jonghack1111/ai-/blob/main/%EC%96%91%EC%A2%85%ED%98%81_ai_.pdf
+  * [1차_AI협업캡처.pdf 첨부 완료] (첨부 후 링크)[text](<양종혁_ai_ (1).pdf>)
 <br>
 
 <br>
