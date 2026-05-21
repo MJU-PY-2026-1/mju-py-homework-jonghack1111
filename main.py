@@ -1,94 +1,142 @@
 # 파일이름 :
 # 작 성 자 :
-name = input('이름을 입력하세요 :')
-age = int(input('나이를 입력하세요 :'))
+#name = input('이름을 입력하세요 :')
+#age = int(input('나이를 입력하세요 :'))
 
-distance = float(input('오늘 달린 거리 (km) :'))
-time = float(input('달린 시간 (분) :'))
-goal_distance = float(input('목표 거리(km) :'))
+#distance = float(input('오늘 달린 거리 (km) :'))
+#time = float(input('달린 시간 (분) :'))
+#goal_distance = float(input('목표 거리(km) :'))
+#pace = time / distance
 
-pace = time / distance
-
+name = ''
+age = 0
+distance = 0.0
+time = 0.0
 run_history = []
-print(f'최근 4번의 런닝 기록 입력')
 
-for i in range(4):
-    d = float(input(f'{i+1}번째 거리 :'))
-    if d <=0:
-        print(f'잘못된 값입니다. 다시 입력하세요.')
-        continue
-    run_history.append(d)
+def input_data():
+    global name, age, distance, time, goal_distance, run_history
 
-run_history.append(distance)
-run_history.sort()
+    name = input('이름을 입력하세요. :')
+    age = int(input('나이를 입력하세요. :'))
+    distance = float(input('오늘 달린 거리 (km) :'))
+    time = float(input('달린 시간(분) :'))
+    goal_distance = float(input('목표 거리(km) :'))
 
-if len(run_history) > 4:
-    run_history.remove(run_history[0])
 
-avg_distance = sum(run_history) / len(run_history)
-max_distance = max(run_history)
-today_index = run_history.index(distance)
+    print(f'최근 4번의 런닝 기록 입력')
 
-if distance > avg_distance and pace < 7:
-    goal_result = '달성성공!!!'
-else:
-    goal_result = '달성실패'
+    for i in range(4):
+        d = float(input(f'{i+1}번째 거리 :'))
+        if d <=0:
+            print(f'잘못된 값입니다. 다시 입력하세요.')
+            continue
+        run_history.append(d)
 
-if distance > avg_distance and pace < 7:
-    perfomance = '최근 평균보다 뛰어납니다!!!'
-else:
-    perfomance = '조금 더 노력해봅시다'
+def view_data():
+    print(f'\n---[조회] 현재 입력된 데이터---')
+    print(f'이름 : {name}, 나이 : {age}')
+    print(f'오늘 거리 : {distance}km, 시간 : {time}분, 목표 : {goal_distance}km')
+    print(f'최근 4회 기록 : {run_history}')
 
-if pace <=5 and distance >= avg_distance:
-    grade = 'A'
-elif pace <= 6:
-    grade = 'B'
-elif pace <= 7:
-    grade = 'C'
-else:
-    grade = 'D'
+def analyze_data(distance, time, goal_distance, run_history):
+    history = run_history.copy()
+    pace = time/distance
 
-if grade == 'A':
-    if goal_result == '달성성공!!!':
-        message = '완벽한 러닝입니다!'
+    run_history.append(distance)
+    run_history.sort()
+
+    if len(run_history) > 4:
+        run_history.remove(run_history[0])
+
+    avg_distance = sum(run_history) / len(run_history)
+    max_distance = max(run_history)
+    today_index = run_history.index(distance)
+
+    if distance > avg_distance and pace < 7:
+        goal_result = '달성성공!!!'
     else:
-        message = '실력은 충분합니다.'
-elif grade == 'B':
-    message = '조금만 더 하면 A!'
-elif grade == 'C':
-    message = '꾸준히 하면 늘어요~'
-else:
-    message = '내일은 더 잘해봅시다..'
+        goal_result = '달성실패'
 
-next_goal = goal_distance
+    if distance > avg_distance and pace < 7:
+        perfomance = '최근 평균보다 뛰어납니다!!!'
+    else:
+        perfomance = '조금 더 노력해봅시다'
 
-if goal_result == '달성성공!!!' and distance > avg_distance:
-    next_goal += 1
-else:
-    next_goal -= 0.5
+    if pace <=5 and distance >= avg_distance:
+        grade = 'A'
+    elif pace <= 6:
+        grade = 'B'
+    elif pace <= 7:
+        grade = 'C'
+    else:
+        grade = 'D'
 
-if pace > 5 :
-    recommanded_pace = pace - 0.2
-else:
-    recommanded_pace = pace
+    if grade == 'A':
+        if goal_result == '달성성공!!!':
+            message = '완벽한 러닝입니다!'
+        else:
+            message = '실력은 충분합니다.'
+    elif grade == 'B':
+        message = '조금만 더 하면 A!'
+    elif grade == 'C':
+        message = '꾸준히 하면 늘어요~'
+    else:
+        message = '내일은 더 잘해봅시다..'
 
-print(f'\n=====러닝결과=====')
-print(f'이름 : {name}, 나이 : {age}')
-print(f'오늘 거리 : {distance}km / 시간 : {time}분')
-print(f'페이스 : {pace}분/km')
-print(f'목표 달성 여부 : {goal_result}')
-print(f'평균 거리 : {avg_distance}km')
-print(f'성과 평가 : {perfomance}')
-print(f'러닝 등급 : {grade}')
-print(f'동기부여 : {message}')
-print(f'최고 기록 : {max_distance}')
-print(f'오늘 기록 순위 : {today_index}')
+    next_goal = goal_distance
 
-print(f'\n=====내일 목표=====')
-print(f'추천 거리 : {next_goal}km')
-print(f'추천 페이스 : {recommanded_pace}분/km')
+    if goal_result == '달성성공!!!' and distance > avg_distance:
+        next_goal += 1
+    else:
+        next_goal -= 0.5
 
-print(f'\n유지된 최근 기록 : {run_history}')
+    if pace > 5 :
+        recommanded_pace = pace - 0.2
+    else:
+        recommanded_pace = pace
+    return pace, avg_distance, max_distance, today_index, goal_result, perfomance, grade, message, next_goal, recommanded_pace, history
+
+def print_result(res):
+    pace, avg_distance, max_distance, today_index, goal_result, perfomance, grade, message, next_goal, recommanded_pace, history = res
+    print(f'\n=====러닝결과=====')
+    print(f'이름 : {name}, 나이 : {age}')
+    print(f'오늘 거리 : {distance}km / 시간 : {time}분')
+    print(f'페이스 : {pace}분/km')
+    print(f'목표 달성 여부 : {goal_result}')
+    print(f'평균 거리 : {avg_distance}km')
+    print(f'성과 평가 : {perfomance}')
+    print(f'러닝 등급 : {grade}')
+    print(f'동기부여 : {message}')
+    print(f'최고 기록 : {max_distance}')
+    print(f'오늘 기록 순위 : {today_index}')
+
+    print(f'\n=====내일 목표=====')
+    print(f'추천 거리 : {next_goal}km')
+    print(f'추천 페이스 : {recommanded_pace}분/km')
+
+    print(f'\n유지된 최근 기록 : {history}')
+
+
+while True:
+    print(f'===============================')
+    print(f'1.입력, 2.조회, 3. 분석, 4. 종료')
+    print(f'===============================')
+    menu = input('원하는 메뉴를 선택하세요 :')
+
+    if menu == '1':
+        input_data()
+    elif menu == '2':
+        view_data()
+    elif menu == '3':
+        result_data = analyze_data(distance, time, goal_distance, run_history)
+        print_result(result_data)
+    elif menu == '4':
+        print(f'프로그램을 종료합니다.')
+        break
+    else:
+        print(f'잘못된 입력입니다. 다시 선택해주세요.')
+
 
 
 
